@@ -8,14 +8,16 @@ name = "proxy-rs"
 path = "main.rs"
 
 [workspace]
-members = ["client", "domain", "server"]
+members = ["client-arena", "server"]
 
 [workspace.dependencies]
-client = { path = "client" }
-domain = { path = "domain" }
+client-arena = { path = "client-arena" }
 server = { path = "server" }
 
+#async-trait = "0.1.68"
+anyhow = "1.0.71"
 axum = "0.6.18" # web app framework
+base64 = "0.21.2"
 hyper = { version ="0.14.26", features = ["full"] } # HTTP impl
 tokio = { version = "1.28.1", features = ["full"] } # async runtime
 

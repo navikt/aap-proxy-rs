@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-domain.workspace = true
+client-arena.workspace = true
 
 axum.workspace = true
 tracing.workspace = true

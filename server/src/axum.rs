@@ -8,13 +8,37 @@ use tower::make::Shared;
 use tower::ServiceExt;
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
+use client_arena::arena;
 use crate::proxy;
 
 use crate::routes::{actuator_live, actuator_ready, root};
 
+/**
+let app = Router::new()
+    .route("/", get(handler))
+    .layer(layer_one)
+    .layer(layer_two)
+    .layer(layer_three);
+
+        requests
+           |
+           v
++----- layer_three -----+
+| +---- layer_two ----+ |
+| | +-- layer_one --+ | |
+| | |               | | |
+| | |    handler    | | |
+| | |               | | |
+| | +-- layer_one --+ | |
+| +---- layer_two ----+ |
++----- layer_three -----+
+           |
+           v
+        responses
+*/
 pub async fn proxy() {
     let proxy_svc = Router::new()
-        .route("/", get(root))
+        .route("/arena", get(arena::handle_token))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
